@@ -11,46 +11,80 @@ import UIKit
 @IBDesignable
 class FaceView: UIView {
     
+    enum Side {
+        case left
+        case right
+    }
+    
+    enum EyeType {
+        case circle
+        case line
+        case arc(clockwise: Bool)
+    }
+    
     @IBInspectable
     var fillColor: UIColor = UIColor.yellow
-    
     @IBInspectable
     var strokeColor: UIColor = UIColor.black
+    @IBInspectable
+    var strokeWidth: Int = 5
     
     private lazy var faceRadius: CGFloat = min(self.bounds.width, self.bounds.height) - 40
-    
     private lazy var faceCenter: CGPoint = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+    
+    lazy var mouthCurvity: Float = 2.0
+    var eyes: Dictionary<Side, EyeType> = [.left : .circle, .right : .circle]
 
     override func draw(_ rect: CGRect) {
-        
-        // draw face oval
-        let faceOval = UIBezierPath(arcCenter: faceCenter, radius: faceRadius / 2, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-        faceOval.lineWidth = 5
+        drawFaceOval()
+        drawEye(side: .left)
+        drawEye(side: .right)
+        drawMouth()
+    }
+    
+    private func drawFaceOval() {
+        let faceOvalPath = UIBezierPath(arcCenter: faceCenter, radius: faceRadius / 2, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        faceOvalPath.lineWidth = CGFloat(strokeWidth)
         strokeColor.set()
-        faceOval.stroke()
+        faceOvalPath.stroke()
         fillColor.set()
-        faceOval.fill()
-        
-        // draw left eye
-        let leftEyePosition = CGPoint(x: faceCenter.x - faceRadius / 5, y: faceCenter.y - faceRadius / 8)
-        let leftEye = UIBezierPath(arcCenter: leftEyePosition, radius: 10, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        faceOvalPath.fill()
+    }
+    
+    private func drawEye(side: Side) {
+        let position: CGPoint
+        switch side {
+        case .left:
+            position = CGPoint(x: faceCenter.x - faceRadius / 5, y: faceCenter.y - faceRadius / 8)
+        case .right:
+            position = CGPoint(x: faceCenter.x + faceRadius / 5, y: faceCenter.y - faceRadius / 8)
+        }
+        let eyePath: UIBezierPath
+        switch eyes[side]! {
+        case .circle:
+            eyePath = UIBezierPath(arcCenter: position, radius: 10, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        case .line:
+            eyePath = UIBezierPath()
+            eyePath.move(to: CGPoint(x: position.x - CGFloat(strokeWidth * 2), y: position.y))
+            eyePath.addLine(to: CGPoint(x: position.x + CGFloat(strokeWidth * 2), y: position.y))
+        case .arc(let clockwise):
+            eyePath = UIBezierPath(arcCenter: position, radius: 10, startAngle: 0, endAngle: CGFloat.pi, clockwise: clockwise)
+        }
+        eyePath.lineWidth = CGFloat(strokeWidth)
         strokeColor.set()
-        leftEye.fill()
-        
-        // draw right eye
-        let rightEyePosition = CGPoint(x: faceCenter.x + faceRadius / 5, y: faceCenter.y - faceRadius / 8)
-        let rightEye = UIBezierPath(arcCenter: rightEyePosition, radius: 10, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        eyePath.stroke()
+    }
+    
+    private func drawMouth() {
+//        let mouth = UIBezierPath(arcCenter: faceCenter, radius: faceRadius / 4, startAngle: CGFloat.pi / 4, endAngle: CGFloat.pi * 3 / 4, clockwise: true)
+        let mouthPath = UIBezierPath()
+        let neutralY = center.y + faceRadius / 4
+        mouthPath.move(to: CGPoint(x: center.x - faceRadius / 4, y: center.y + faceRadius / 4))
+        mouthPath.addQuadCurve(to: CGPoint(x: center.x + faceRadius / 4, y: center.y + faceRadius / 4),
+                               controlPoint: CGPoint(x: center.x, y: neutralY + self.faceRadius * CGFloat(mouthCurvity / 4)))
+        mouthPath.lineWidth = CGFloat(strokeWidth)
         strokeColor.set()
-        rightEye.fill()
-        
-        // draw mouth
-        let mouth = UIBezierPath(arcCenter: faceCenter, radius: faceRadius / 4, startAngle: CGFloat.pi / 4, endAngle: CGFloat.pi * 3 / 4, clockwise: true)
-//        let mouth = UIBezierPath()
-//        mouth.move(to: center)
-//        mouth.addQuadCurve(to: CGPoint(x: center.x + 100, y: center.y + 200), controlPoint: CGPoint(x: center.x - 100, y: center.y + 200))
-        mouth.lineWidth = 5
-        strokeColor.set()
-        mouth.stroke()
+        mouthPath.stroke()
     }
 	
 }
