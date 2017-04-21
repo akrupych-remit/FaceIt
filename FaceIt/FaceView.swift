@@ -28,12 +28,29 @@ class FaceView: UIView {
     var strokeColor: UIColor = UIColor.black
     @IBInspectable
     var strokeWidth: Int = 5
+    @IBInspectable
+    var scale: CGFloat = 0.9
     
-    private lazy var faceRadius: CGFloat = min(self.bounds.width, self.bounds.height) - 40
-    private lazy var faceCenter: CGPoint = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+    private var faceRadius: CGFloat {
+        return min(self.bounds.width, self.bounds.height) * self.scale
+    }
+    private var faceCenter: CGPoint {
+        return CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+    }
     
-    lazy var mouthCurvity: Float = 2.0
+    lazy var mouthCurvity: Float = 1
     var eyes: Dictionary<Side, EyeType> = [.left : .circle, .right : .circle]
+    
+    func onPinch(recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .changed, .ended:
+            scale *= recognizer.scale
+            recognizer.scale = 1
+            setNeedsDisplay()
+        default:
+            break
+        }
+    }
 
     override func draw(_ rect: CGRect) {
         drawFaceOval()

@@ -12,27 +12,35 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var faceView: FaceView! {
         didSet {
+            faceView.addGestureRecognizer(UIPinchGestureRecognizer(target: faceView, action: #selector(FaceView.onPinch)))
+            faceView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onFaceTaped)))
+            let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeUp))
+            swipeUp.direction = .up
+            faceView.addGestureRecognizer(swipeUp)
+            let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeDown))
+            swipeDown.direction = .down
+            faceView.addGestureRecognizer(swipeDown)
             updateView()
         }
     }
     
-    private var facialExpression: FacialExpression = FacialExpression(eyes: .open, mouth: .smile) {
+    private var faceModel: FaceModel = FaceModel(eyes: .closed, mouth: .frown) {
         didSet {
             updateView()
         }
     }
     
-    private let eyesMapping: Dictionary<FacialExpression.Eyes, FaceView.EyeType> = [
+    private let eyesMapping: Dictionary<FaceModel.Eyes, FaceView.EyeType> = [
         .open : .circle,
         .closed : .line,
         .squinting : .arc(clockwise: false)
     ]
     
-    private let mouthMapping: Dictionary<FacialExpression.Mouth, Float> = [
+    private let mouthMapping: Dictionary<FaceModel.Mouth, Float> = [
         .frown : -1,
-        .grin : -0.5,
+        .smirk : -0.5,
         .neutral : 0,
-        .smirk : 0.5,
+        .grin : 0.5,
         .smile : 1
     ]
     
@@ -42,9 +50,24 @@ class ViewController: UIViewController {
     }
     
     private func updateView() {
-        faceView.eyes[.left] = eyesMapping[facialExpression.eyes]
-        faceView.eyes[.right] = eyesMapping[facialExpression.eyes]
-        faceView.mouthCurvity = mouthMapping[facialExpression.mouth]!
+        faceView.eyes[.left] = eyesMapping[faceModel.eyes]
+        faceView.eyes[.right] = eyesMapping[faceModel.eyes]
+        faceView.mouthCurvity = mouthMapping[faceModel.mouth]!
+        faceView.setNeedsDisplay()
+    }
+    
+    func onFaceTaped(recognizer: UITapGestureRecognizer) {
+        if recognizer.state == .ended {
+            faceModel = FaceModel(eyes: faceModel.eyes == .open ? .closed : .open, mouth: faceModel.mouth)
+        }
+    }
+    
+    func onSwipeUp(recognizer: UISwipeGestureRecognizer) {
+        faceModel = faceModel.happier
+    }
+    
+    func onSwipeDown(recognizer: UISwipeGestureRecognizer) {
+        faceModel = faceModel.sadder
     }
 
 }

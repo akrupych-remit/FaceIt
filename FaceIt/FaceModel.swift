@@ -8,7 +8,7 @@
 import Foundation
 
 // UI-independent representation of a facial expression
-struct FacialExpression {
+struct FaceModel {
     
     enum Eyes: Int {
         case open
@@ -30,12 +30,12 @@ struct FacialExpression {
         }
     }
     
-    var sadder: FacialExpression {
-        return FacialExpression(eyes: self.eyes, mouth: self.mouth.sadder)
+    var sadder: FaceModel {
+        return FaceModel(eyes: self.eyes, mouth: self.mouth.sadder)
     }
     
-    var happier: FacialExpression {
-        return FacialExpression(eyes: self.eyes, mouth: self.mouth.happier)
+    var happier: FaceModel {
+        return FaceModel(eyes: self.eyes, mouth: self.mouth.happier)
     }
     
     let eyes: Eyes
