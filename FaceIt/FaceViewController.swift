@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FaceViewController: UIViewController {
 
     @IBOutlet weak var faceView: FaceView! {
         didSet {
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private var faceModel: FaceModel = FaceModel(eyes: .closed, mouth: .frown) {
+    var faceModel: FaceModel = FaceModel(eyes: .open, mouth: .neutral) {
         didSet {
             updateView()
         }
@@ -50,6 +50,7 @@ class ViewController: UIViewController {
     }
     
     private func updateView() {
+        guard faceView != nil else { return }
         faceView.eyes[.left] = eyesMapping[faceModel.eyes]
         faceView.eyes[.right] = eyesMapping[faceModel.eyes]
         faceView.mouthCurvity = mouthMapping[faceModel.mouth]!
@@ -63,11 +64,11 @@ class ViewController: UIViewController {
     }
     
     func onSwipeUp(recognizer: UISwipeGestureRecognizer) {
-        faceModel = faceModel.happier
+        faceModel = faceModel.sadder
     }
     
     func onSwipeDown(recognizer: UISwipeGestureRecognizer) {
-        faceModel = faceModel.sadder
+        faceModel = faceModel.happier
     }
 
 }

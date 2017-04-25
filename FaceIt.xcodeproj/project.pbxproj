@@ -8,24 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		77F6F9531EA8B4DF000A6F41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6F9521EA8B4DF000A6F41 /* AppDelegate.swift */; };
-		77F6F9551EA8B4DF000A6F41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6F9541EA8B4DF000A6F41 /* ViewController.swift */; };
+		77F6F9551EA8B4DF000A6F41 /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6F9541EA8B4DF000A6F41 /* FaceViewController.swift */; };
 		77F6F9581EA8B4DF000A6F41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F6F9561EA8B4DF000A6F41 /* Main.storyboard */; };
 		77F6F95A1EA8B4DF000A6F41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77F6F9591EA8B4DF000A6F41 /* Assets.xcassets */; };
 		77F6F95D1EA8B4DF000A6F41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F6F95B1EA8B4DF000A6F41 /* LaunchScreen.storyboard */; };
 		77F6F9661EA8B53D000A6F41 /* FaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6F9651EA8B53D000A6F41 /* FaceView.swift */; };
 		77F6F9681EA8E058000A6F41 /* FaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6F9671EA8E058000A6F41 /* FaceModel.swift */; };
+		77FA2DD31EAF905500C5364B /* EmotionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FA2DD21EAF905500C5364B /* EmotionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		77F6F94F1EA8B4DF000A6F41 /* FaceIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F6F9521EA8B4DF000A6F41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		77F6F9541EA8B4DF000A6F41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		77F6F9541EA8B4DF000A6F41 /* FaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
 		77F6F9571EA8B4DF000A6F41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		77F6F9591EA8B4DF000A6F41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77F6F95C1EA8B4DF000A6F41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77F6F95E1EA8B4DF000A6F41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77F6F9651EA8B53D000A6F41 /* FaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceView.swift; sourceTree = "<group>"; };
 		77F6F9671EA8E058000A6F41 /* FaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceModel.swift; sourceTree = "<group>"; };
+		77FA2DD21EAF905500C5364B /* EmotionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +61,11 @@
 			isa = PBXGroup;
 			children = (
 				77F6F9641EA8B4F7000A6F41 /* Support */,
-				77F6F9541EA8B4DF000A6F41 /* ViewController.swift */,
+				77F6F9541EA8B4DF000A6F41 /* FaceViewController.swift */,
 				77F6F9561EA8B4DF000A6F41 /* Main.storyboard */,
 				77F6F9651EA8B53D000A6F41 /* FaceView.swift */,
 				77F6F9671EA8E058000A6F41 /* FaceModel.swift */,
+				77FA2DD21EAF905500C5364B /* EmotionsViewController.swift */,
 			);
 			path = FaceIt;
 			sourceTree = "<group>";
@@ -151,8 +154,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77F6F9551EA8B4DF000A6F41 /* ViewController.swift in Sources */,
+				77F6F9551EA8B4DF000A6F41 /* FaceViewController.swift in Sources */,
 				77F6F9531EA8B4DF000A6F41 /* AppDelegate.swift in Sources */,
+				77FA2DD31EAF905500C5364B /* EmotionsViewController.swift in Sources */,
 				77F6F9681EA8E058000A6F41 /* FaceModel.swift in Sources */,
 				77F6F9661EA8B53D000A6F41 /* FaceView.swift in Sources */,
 			);
@@ -320,6 +324,7 @@
 				77F6F9631EA8B4DF000A6F41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
